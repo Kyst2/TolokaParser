@@ -44,7 +44,7 @@ func makeRequest2() {
 }
 
 func getCookies() -> [HTTPCookie] {
-    let cookies11: [HTTPCookie] = [
+    return [
         HTTPCookie(properties: [
             .name: "toloka_data",
             .value: "a%3A2%3A%7Bs%3A11%3A%22autologinid%22%3Bs%3A32%3A%22c3219d6f48aff8078a874ab8d7b95c44%22%3Bs%3A6%3A%22userid%22%3Bi%3A69985%3B%7D",
@@ -72,6 +72,4 @@ func getCookies() -> [HTTPCookie] {
             .comment: ""
         ])!,
     ]
-    
-    return cookies11
 }
