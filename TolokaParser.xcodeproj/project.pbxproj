@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D48624E29D84A040022C7A7 /* Other.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D48624D29D84A040022C7A7 /* Other.swift */; };
 		A23A0EA029CE07740037146F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23A0E9F29CE07740037146F /* main.swift */; };
 		A23A0EA729CE07BA0037146F /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23A0EA629CE07BA0037146F /* Structs.swift */; };
 		A23A0EAA29D1EB080037146F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A23A0EA929D1EB080037146F /* Alamofire */; };
@@ -25,6 +26,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1D48624D29D84A040022C7A7 /* Other.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Other.swift; sourceTree = "<group>"; };
 		A23A0E9C29CE07740037146F /* TolokaParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TolokaParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		A23A0E9F29CE07740037146F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		A23A0EA629CE07BA0037146F /* Structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			children = (
 				A23A0E9F29CE07740037146F /* main.swift */,
 				A23A0EA629CE07BA0037146F /* Structs.swift */,
+				1D48624D29D84A040022C7A7 /* Other.swift */,
 			);
 			path = TolokaParser;
 			sourceTree = "<group>";
@@ -131,6 +134,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D48624E29D84A040022C7A7 /* Other.swift in Sources */,
 				A23A0EA729CE07BA0037146F /* Structs.swift in Sources */,
 				A23A0EA029CE07740037146F /* main.swift in Sources */,
 			);
@@ -255,10 +259,11 @@
 		A23A0EA429CE07740037146F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QZKQ74LNRY;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -266,10 +271,11 @@
 		A23A0EA529CE07740037146F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QZKQ74LNRY;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
