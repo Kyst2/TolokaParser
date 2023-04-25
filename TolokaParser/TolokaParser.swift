@@ -12,11 +12,13 @@ class TolokaParser {
     static func parse() {
         login()
         
-        let allPages = getAllPages(fromCategory: "https://toloka.to/f127")
+//        let allPages = getAllPages(fromCategory: "https://toloka.to/f127")
         
-        let animeUrls = allPages.map{ parseAnimeTopicsUrlsFrom($0) }.flatMap{ $0 }
+//        let animeUrls = allPages.map{ parseAnimeTopicsUrlsFrom($0) }.flatMap{ $0 }
         
-        let animes = animeUrls.map{ extractAnimeData(from: $0) }
+        let animeUrls = ["https://toloka.to/t667640", "https://toloka.to/t667737", "https://toloka.to/t667517","https://toloka.to/t667787","https://toloka.to/t665667","https://toloka.to/t81059"]
+        
+        let animes = animeUrls.map { extractAnimeData(from: $0) }
         
         print("finished")
     }
@@ -140,10 +142,11 @@ fileprivate extension TolokaParser {
             let titleEng = try doc.getTitleEng()
             let titleJap = try doc.getTitleJap()
             let titleUkr = try doc.getTitleUkr()
-            let studios  = try doc.getStudios()
-            let year     = try doc.getYear()
-            let genres   = try doc.getGenres()
-            let descr    = try doc.getDescr()
+            
+            let studios  = try doc.getStudios()//Кінокомпанія: / Кіностудія / Аніме-студія
+            let year     = try doc.getYear()   // get from title
+            let genres   = try doc.getGenres() //Жанр:
+            let descr    = try doc.getDescr()  //Сюжет:
             
 //            anime.nameUkr = title
             //            let studio = try doc.select("<tr><td colspan=\"2\" style=\"padding: 6px; border-top: 1px solid #ADBAC6;">").first()
