@@ -130,25 +130,29 @@ fileprivate extension TolokaParser {
 // Get "Anime" items
 ///////////////////////////////
 fileprivate extension TolokaParser {
-    func extractAnimeData(from url: String) -> Anime? {
+    static func extractAnimeData(from url: String) -> Anime? {
         guard  let url = URL(string: url) else { return nil }
         
         do {
             let html = try String(contentsOf: url)
             let doc: Document = try SwiftSoup.parse(html)
             
-            let title = try doc.select("title").first()?.text() ?? ""
+            let titleEng = try doc.getTitleEng()
+            let titleJap = try doc.getTitleJap()
+            let titleUkr = try doc.getTitleUkr()
+            let studios  = try doc.getStudios()
+            let year     = try doc.getYear()
+            let genres   = try doc.getGenres()
+            let descr    = try doc.getDescr()
+            
 //            anime.nameUkr = title
             //            let studio = try doc.select("<tr><td colspan=\"2\" style=\"padding: 6px; border-top: 1px solid #ADBAC6;">").first()
             //                .compactMap { try? $0.attr("Кінокомпанія:") }
             ////            }
             ///
             
-            var anime = Anime( nameJap: nil, nameEng: nil, nameUkr: nil, studios: [],
-                               year: nil, genres: [], descr: nil, urlsDetails: []
-            )
-            
-            return anime
+            return Anime( nameJap: titleJap, nameEng: titleEng, nameUkr: titleUkr, studios: studios,
+                               year: year, genres: genres, descr: descr, urlsDetails: [] )
         } catch {
             print("Error: \(error)")
         }
@@ -199,5 +203,37 @@ fileprivate extension Document {
     
     func isPageLoaded() throws -> Bool {
         try self.getElementsContainingOwnText("Профіль").count > 0
+    }
+}
+
+////////////////////////
+///Anime page HELPERS
+///////////////////////
+fileprivate extension Document {
+    func getTitleEng() throws -> String? {
+        try self.select("title").first()?.text()
+    }
+    
+    func getTitleUkr() throws -> String? {
+        try self.select("title").first()?.text()
+    }
+    
+    func getTitleJap() throws -> String? {
+        try self.select("title").first()?.text()
+    }
+    
+    func getStudios() throws -> [String] {
+        return []
+    }
+    
+    func getYear() throws -> Int {
+        return -1
+    }
+    func getGenres() throws -> [String] {
+        return []
+    }
+    
+    func getDescr() throws -> String? {
+        return ""
     }
 }
