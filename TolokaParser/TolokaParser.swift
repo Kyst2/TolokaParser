@@ -12,12 +12,20 @@ class TolokaParser {
     static func parse() {
         login()
         
-        let animeUrlsFromAllPages = getAllAnimeUrls(fromCategory: "https://toloka.to/f127")
+        let allPages = getAllPages(fromCategory: "https://toloka.to/f127")
+        
+        let animeUrls = allPages.map{ parseAnimeTopicsUrlsFrom($0) }.flatMap{ $0 }
+        
+        let animes = animeUrls.map{ extractAnimeData(from: $0) }
         
         print("finished")
     }
+    
 }
 
+///////////////////////////////
+// Get anime urls
+///////////////////////////////
 fileprivate extension TolokaParser {
     static func login() {
         guard let url = URL(string: "https://toloka.to/f127") else {
@@ -47,25 +55,58 @@ fileprivate extension TolokaParser {
         task.resume()
     }
     
-    static func getAllAnimeUrls(fromCategory categoryUrl: String) -> [String] {
-        var allAnimeLinks:[String] = []
+    static func getAllPages(fromCategory categoryUrl: String) -> [String] {
+        var pagesWithAnimeLists:[String] = []
         
         var pageNum = 0
+        var needParsePageOneMoreTime = false
         
         while true {
             let anumeNum = pageNum * 90
             
-            let animeLinks = parseAnimeTopicsUrlsFrom("\(categoryUrl)-\(anumeNum)")
+            guard let pageLink = URL(string: "\(categoryUrl)-\(anumeNum)") else { fatalError("Invalid URL") }
             
-            if animeLinks.isEmpty { break }
+            do {
+                let htmlPage = try String(contentsOf: pageLink)
+                let doc: Document = try! SwiftSoup.parse(htmlPage)
+                
+                guard try doc.isPageLoaded() else { needParsePageOneMoreTime = true; break }
+                
+                if try doc.isFinalPageDisplayed() { break }
+                
+                pagesWithAnimeLists.append("\(categoryUrl)-\(anumeNum)")
+            } catch {
+                print("Error")
+            }
             
-            allAnimeLinks.append(contentsOf: animeLinks)
-            
-            pageNum+=1
+            if !needParsePageOneMoreTime {
+                pageNum+=1
+            }
+            needParsePageOneMoreTime = false
         }
         
-        return allAnimeLinks
+        return pagesWithAnimeLists
     }
+    
+//    static func getAllAnimeUrls(fromCategory categoryUrl: String) -> [String] {
+//        var allAnimeLinks:[String] = []
+//
+//        var pageNum = 0
+//
+//        while true {
+//            let anumeNum = pageNum * 90
+//
+//            let animeLinks = parseAnimeTopicsUrlsFrom("\(categoryUrl)-\(anumeNum)")
+//
+//            if animeLinks.isEmpty { break }
+//
+//            allAnimeLinks.append(contentsOf: animeLinks)
+//
+//            pageNum+=1
+//        }
+//
+//        return allAnimeLinks
+//    }
     
     static func parseAnimeTopicsUrlsFrom (_ url:String) -> [String] {
         guard let url = URL(string: url) else { fatalError("Invalid URL") }
@@ -85,6 +126,41 @@ fileprivate extension TolokaParser {
     }
 }
 
+///////////////////////////////
+// Get "Anime" items
+///////////////////////////////
+fileprivate extension TolokaParser {
+    func extractAnimeData(from url: String) -> Anime? {
+        guard  let url = URL(string: url) else { return nil }
+        
+        do {
+            let html = try String(contentsOf: url)
+            let doc: Document = try SwiftSoup.parse(html)
+            
+            let title = try doc.select("title").first()?.text() ?? ""
+//            anime.nameUkr = title
+            //            let studio = try doc.select("<tr><td colspan=\"2\" style=\"padding: 6px; border-top: 1px solid #ADBAC6;">").first()
+            //                .compactMap { try? $0.attr("Кінокомпанія:") }
+            ////            }
+            ///
+            
+            var anime = Anime( nameJap: nil, nameEng: nil, nameUkr: nil, studios: [],
+                               year: nil, genres: [], descr: nil, urlsDetails: []
+            )
+            
+            return anime
+        } catch {
+            print("Error: \(error)")
+        }
+        
+        return nil
+    }
+}
+
+////////////////////////
+///HELPERS
+///////////////////////
+
 fileprivate func getCookies() -> [HTTPCookie] {
     return [
         HTTPCookie(properties: [
@@ -98,7 +174,7 @@ fileprivate func getCookies() -> [HTTPCookie] {
         
         HTTPCookie(properties: [
             .name: "toloka_sid",
-            .value: "08e0895f28c06f713b4573b29e7fce4a",
+            .value: "a9ccb1dfe1a82808bfe27ba700c6e020",
             .domain: "toloka.to",
             .path: "/",
             .expires: Date(timeIntervalSinceNow: 10),
@@ -114,4 +190,14 @@ fileprivate func getCookies() -> [HTTPCookie] {
             .comment: ""
         ])!,
     ]
+}
+
+fileprivate extension Document {
+    func isFinalPageDisplayed() throws -> Bool {
+        try self.getElementsContainingOwnText("У цьому форумі немає повідомлень.").count > 0
+    }
+    
+    func isPageLoaded() throws -> Bool {
+        try self.getElementsContainingOwnText("Профіль").count > 0
+    }
 }
