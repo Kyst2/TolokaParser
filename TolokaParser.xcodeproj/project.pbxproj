@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D48624E29D84A040022C7A7 /* Other.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D48624D29D84A040022C7A7 /* Other.swift */; };
 		A23A0EA029CE07740037146F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23A0E9F29CE07740037146F /* main.swift */; };
-		A23A0EA729CE07BA0037146F /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23A0EA629CE07BA0037146F /* Structs.swift */; };
 		A23A0EAA29D1EB080037146F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A23A0EA929D1EB080037146F /* Alamofire */; };
+		A2FC61D329E5D63500AFA21F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = A2FC61D229E5D63500AFA21F /* SwiftSoup */; };
+		A2FC61F629F81ADA00AFA21F /* Anime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FC61F529F81ADA00AFA21F /* Anime.swift */; };
+		A2FC61F829F81DD800AFA21F /* TolokaParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FC61F729F81DD800AFA21F /* TolokaParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,10 +27,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D48624D29D84A040022C7A7 /* Other.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Other.swift; sourceTree = "<group>"; };
 		A23A0E9C29CE07740037146F /* TolokaParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TolokaParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		A23A0E9F29CE07740037146F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		A23A0EA629CE07BA0037146F /* Structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
+		A2FC61F529F81ADA00AFA21F /* Anime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anime.swift; sourceTree = "<group>"; };
+		A2FC61F729F81DD800AFA21F /* TolokaParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TolokaParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +39,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A23A0EAA29D1EB080037146F /* Alamofire in Frameworks */,
+				A2FC61D329E5D63500AFA21F /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,8 +66,8 @@
 			isa = PBXGroup;
 			children = (
 				A23A0E9F29CE07740037146F /* main.swift */,
-				A23A0EA629CE07BA0037146F /* Structs.swift */,
-				1D48624D29D84A040022C7A7 /* Other.swift */,
+				A2FC61F529F81ADA00AFA21F /* Anime.swift */,
+				A2FC61F729F81DD800AFA21F /* TolokaParser.swift */,
 			);
 			path = TolokaParser;
 			sourceTree = "<group>";
@@ -88,6 +90,7 @@
 			name = TolokaParser;
 			packageProductDependencies = (
 				A23A0EA929D1EB080037146F /* Alamofire */,
+				A2FC61D229E5D63500AFA21F /* SwiftSoup */,
 			);
 			productName = TolokaParser;
 			productReference = A23A0E9C29CE07740037146F /* TolokaParser */;
@@ -119,6 +122,7 @@
 			mainGroup = A23A0E9329CE07740037146F;
 			packageReferences = (
 				A23A0EA829D1EB080037146F /* XCRemoteSwiftPackageReference "Alamofire" */,
+				A2FC61D129E5D63500AFA21F /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 			);
 			productRefGroup = A23A0E9D29CE07740037146F /* Products */;
 			projectDirPath = "";
@@ -134,8 +138,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D48624E29D84A040022C7A7 /* Other.swift in Sources */,
-				A23A0EA729CE07BA0037146F /* Structs.swift in Sources */,
+				A2FC61F829F81DD800AFA21F /* TolokaParser.swift in Sources */,
+				A2FC61F629F81ADA00AFA21F /* Anime.swift in Sources */,
 				A23A0EA029CE07740037146F /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,6 +316,14 @@
 				minimumVersion = 5.6.1;
 			};
 		};
+		A2FC61D129E5D63500AFA21F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -319,6 +331,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A23A0EA829D1EB080037146F /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		A2FC61D229E5D63500AFA21F /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2FC61D129E5D63500AFA21F /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
