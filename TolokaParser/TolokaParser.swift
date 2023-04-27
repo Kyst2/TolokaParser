@@ -213,18 +213,26 @@ fileprivate extension Document {
 ///Anime page HELPERS
 ///////////////////////
 fileprivate extension Document {
+    
     func getTitleEng() throws -> String? {
         try self.select("title").first()?.text()
     }
     
     func getTitleUkr() throws -> String? {
-        try self.select("title").first()?.text()
+        let title = try self.select("title").first()?.text()
+        
+        let matches = title?.matches(forRegex: "([А-Я]|[а-я]|\\d|[:,іґї ])*/") ?? []
+        
+        let ukrTitle = matches.first?.trimmingCharacters(in: [" ", "/"])
+        
+        return ukrTitle
     }
     
     func getTitleJap() throws -> String? {
         try self.select("title").first()?.text()
     }
     
+    //Kyst
     func getStudios() throws -> [String] {
         return []
     }
@@ -232,12 +240,14 @@ fileprivate extension Document {
     func getYear() throws -> Int {
         let title = try self.select("title").first()?.text()
         
-        var matches = title?.matches(forRegex: "\\d\\d\\d\\d") ?? []
+        let matches = title?.matches(forRegex: "\\d{4}") ?? []
         
         let years = matches.compactMap{ Int($0) }.filter{ $0 > 1940 }
         
         return years.first ?? -1
     }
+    
+    //Kyst
     func getGenres() throws -> [String] {
         return []
     }
