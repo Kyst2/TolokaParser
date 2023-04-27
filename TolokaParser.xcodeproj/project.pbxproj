@@ -12,6 +12,7 @@
 		A2FC61D329E5D63500AFA21F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = A2FC61D229E5D63500AFA21F /* SwiftSoup */; };
 		A2FC61F629F81ADA00AFA21F /* Anime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FC61F529F81ADA00AFA21F /* Anime.swift */; };
 		A2FC61F829F81DD800AFA21F /* TolokaParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FC61F729F81DD800AFA21F /* TolokaParser.swift */; };
+		A2FC61FB29FAFA4F00AFA21F /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2FC61FA29FAFA4F00AFA21F /* String+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,7 @@
 		A23A0E9F29CE07740037146F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		A2FC61F529F81ADA00AFA21F /* Anime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anime.swift; sourceTree = "<group>"; };
 		A2FC61F729F81DD800AFA21F /* TolokaParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TolokaParser.swift; sourceTree = "<group>"; };
+		A2FC61FA29FAFA4F00AFA21F /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,11 +67,20 @@
 		A23A0E9E29CE07740037146F /* TolokaParser */ = {
 			isa = PBXGroup;
 			children = (
+				A2FC61F929FAFA4300AFA21F /* Ext */,
 				A23A0E9F29CE07740037146F /* main.swift */,
 				A2FC61F529F81ADA00AFA21F /* Anime.swift */,
 				A2FC61F729F81DD800AFA21F /* TolokaParser.swift */,
 			);
 			path = TolokaParser;
+			sourceTree = "<group>";
+		};
+		A2FC61F929FAFA4300AFA21F /* Ext */ = {
+			isa = PBXGroup;
+			children = (
+				A2FC61FA29FAFA4F00AFA21F /* String+.swift */,
+			);
+			path = Ext;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +151,7 @@
 			files = (
 				A2FC61F829F81DD800AFA21F /* TolokaParser.swift in Sources */,
 				A2FC61F629F81ADA00AFA21F /* Anime.swift in Sources */,
+				A2FC61FB29FAFA4F00AFA21F /* String+.swift in Sources */,
 				A23A0EA029CE07740037146F /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
