@@ -243,7 +243,14 @@ fileprivate extension Document {
     }
     
     func getDescr() throws -> String? {
-        return ""
+        guard let postBody = try self.getElementsByClass("postbody").compactMap({ try? $0.text() }).first,
+              let firstMatch = postBody.matches(forRegex: "Сюжет:[\\S\\s]*Тривалість:").first
+        else { return nil }
+        var descr = firstMatch
+        
+        descr = descr.replace(of: "Тривалість:", to: "").replace(of: "Сюжет:", to: "").trimmingCharacters(in: ["\n", " ", "\t"])
+        
+        return descr
     }
 }
 
@@ -262,5 +269,9 @@ extension String {
             print("invalid regex: \(error.localizedDescription)")
             return []
         }
+    }
+    
+    func replace(of: String, to: String) -> String {
+        return self.replacingOccurrences(of: of, with: to, options: .regularExpression, range: nil)
     }
 }
