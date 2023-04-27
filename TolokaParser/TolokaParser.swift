@@ -181,7 +181,7 @@ fileprivate func getCookies() -> [HTTPCookie] {
         
         HTTPCookie(properties: [
             .name: "toloka_sid",
-            .value: "a9ccb1dfe1a82808bfe27ba700c6e020",
+            .value: "b00906a812106edbb03e32a4b52b437cс",
             .domain: "toloka.to",
             .path: "/",
             .expires: Date(timeIntervalSinceNow: 10),
@@ -230,7 +230,13 @@ fileprivate extension Document {
     }
     
     func getYear() throws -> Int {
-        return -1
+        let title = try self.select("title").first()?.text()
+        
+        var matches = title?.matches(forRegex: "\\d\\d\\d\\d") ?? []
+        
+        let years = matches.compactMap{ Int($0) }.filter{ $0 > 1940 }
+        
+        return years.first ?? -1
     }
     func getGenres() throws -> [String] {
         return []
@@ -238,5 +244,23 @@ fileprivate extension Document {
     
     func getDescr() throws -> String? {
         return ""
+    }
+}
+
+extension String {
+    func matches(forRegex regex: String) -> [String] {
+        let text = self
+        
+        do {
+            let regex = try NSRegularExpression(pattern: regex)
+            let results = regex.matches(in: text,
+                                        range: NSRange(text.startIndex..., in: text))
+            return results.map {
+                String(text[Range($0.range, in: text)!])
+            }
+        } catch let error {
+            print("invalid regex: \(error.localizedDescription)")
+            return []
+        }
     }
 }
