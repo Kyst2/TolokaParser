@@ -16,7 +16,7 @@ class TolokaParser {
         
 //        let animeUrls = allPages.map{ parseAnimeTopicsUrlsFrom($0) }.flatMap{ $0 }
         
-        let animeUrls = ["https://toloka.to/t667640", "https://toloka.to/t667737", "https://toloka.to/t667517","https://toloka.to/t667787","https://toloka.to/t665667","https://toloka.to/t81059"]
+        let animeUrls = ["https://toloka.to/t667640", "https://toloka.to/t667737", "https://toloka.to/t667517","https://toloka.to/t667787","https://toloka.to/t665667","https://toloka.to/t81059","https://toloka.to/t665320"]
         
         let animes = animeUrls.map { extractAnimeData(from: $0) }
         
@@ -181,7 +181,7 @@ fileprivate func getCookies() -> [HTTPCookie] {
         
         HTTPCookie(properties: [
             .name: "toloka_sid",
-            .value: "b00906a812106edbb03e32a4b52b437cс",
+            .value: "85c53b7dfadd95e904969e3d76bd8ad8",
             .domain: "toloka.to",
             .path: "/",
             .expires: Date(timeIntervalSinceNow: 10),
@@ -221,7 +221,8 @@ fileprivate extension Document {
     func getTitleUkr() throws -> String? {
         let title = try self.select("title").first()?.text()
         
-        let matches = title?.matches(forRegex: "([А-Я]|[а-я]|\\d|[:,іґї ])*/") ?? []
+        let matches = title?.matches(forRegex: #"^(.*?)\s(/|\s\()"#) ?? []
+//                                        "([А-Я]|[а-я]|\\d|[:,іґїІҐЇ ])*/") ?? []
         
         let ukrTitle = matches.first?.trimmingCharacters(in: [" ", "/"])
         
@@ -234,7 +235,20 @@ fileprivate extension Document {
     
     //Kyst
     func getStudios() throws -> [String] {
-        return []
+        guard let postBody = try self.getElementsByClass("postbody").compactMap({ try? $0.text() }).first else { return [] }
+        var firstMatch = postBody.matches(forRegex: "Кінокомпанія:[\\S\\s]*Режисер:").first
+        var secondMatch = postBody.matches(forRegex: "Кіностудія / кінокомпанія:[\\S\\s]*Режисер:").first
+        var thirdMatch = postBody.matches(forRegex: "Аніме-студія:[\\S\\s]*Режисер:").first
+        var studios:[String] = []
+        
+        firstMatch = firstMatch?.replace(of: "Режисер:", to: " ").replace(of: "Кінокомпанія:", to: "").trimmingCharacters(in: ["\n", " ", "\t"])
+        studios.append(firstMatch ?? "")
+        secondMatch = secondMatch?.replace(of: "Режисер:", to: " ").replace(of: "Кіностудія / кінокомпанія:", to: "").trimmingCharacters(in: ["\n", " ", "\t"])
+        studios.append(secondMatch ?? "")
+        thirdMatch = thirdMatch?.replace(of: "Режисер:", to: " ").replace(of: "Аніме-студія:", to: "").trimmingCharacters(in: ["\n", " ", "\t"])
+        studios.append(thirdMatch ?? "")
+
+        return studios.filter({$0 != ""})
     }
     
     func getYear() throws -> Int {
@@ -248,8 +262,16 @@ fileprivate extension Document {
     }
     
     //Kyst
-    func getGenres() throws -> [String] {
-        return []
+    func getGenres() throws -> [String]? {
+        guard let postBody = try self.getElementsByClass("postbody").compactMap({ try? $0.text() }).first,
+              var firstMatch = postBody.matches(forRegex: "Жанр:[\\S\\s]*Країна:").first
+        else { return nil }
+        var genres:[String] = []
+        
+        firstMatch = firstMatch.replace(of: "Жанр:", to: "").replace(of: "Країна:", to: "").trimmingCharacters(in: ["\n", " ", "\t"])
+        genres.append(firstMatch)
+        
+        return genres
     }
     
     func getDescr() throws -> String? {
